@@ -98,7 +98,6 @@ class Reverse {
 
     for (let i = 0; i < str.length; i++) {
       result = str[i] + result; // ჯერ დააბრუნებს 8, შემდეგ 38, და შემდეგ კი 738
-      console.log(result);
     }
     return result;
   }
