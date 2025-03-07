@@ -199,7 +199,7 @@ console.log(s_list); */
 
 // 1. ვქმნით Node(კვანძი)-ს
 
-class Node {
+/* class Node {
   constructor(version, next = null) {
     this.version = version;
     this.next = next;
@@ -281,3 +281,70 @@ console.log("მიმდინარე ვერსია:", history.getCurrre
 history.getAllVersions();
 console.log("სიგრძე:", history.getVersionLength());
 console.log("წინა ვერსია:", history.pop());
+ */
+
+// დავალება 2. დაწერეთ პროგრამა, რომელიც წაიკითხავს ტექსტს (მაგალითად, წინადადებას ან პარაგრაფს) და დაითვლის თითოეული სიტყვის გამოჩენის სიხშირეს. გამოიყენეთ ცალმხრივად ბმული სია (Singly Linked List) სიტყვებისა და მათი სიხშირეების შესანახად.
+
+// 1. ვქმნით კვანძს, რომელიც შედგება: word, frequency, next
+
+class Node {
+  constructor(word) {
+    this.word = word;
+    this.frequency = 1;
+    this.next = null;
+  }
+}
+
+class LinkedList {
+  constructor() {
+    this.head = null;
+  }
+
+  // 2. ვწერთ ფუნქციად რომელიც ამატებს სიტყვას სიაში
+  // თუ სიტყვა უკვე არსებობს სიაში, გაზარდეთ მისი frequency 1-ით
+  // თუ სიტყვა არ არსებობს, დაამატეთ ის სიის ბოლოში frequency 1-ით.
+
+  addWord(word) {
+    if (!this.head) {
+      this.head = new Node(word);
+
+      return;
+    }
+
+    let current = this.head;
+    while (current) {
+      if (current.word === word) {
+        current.frequency++;
+
+        return;
+      }
+
+      if (!current.next) break;
+      current = current.next;
+    }
+
+    current.next = new Node(word);
+  }
+
+  // 3. ვწერთ ფუნქცია printWordFrequencies-ს, რომელიც დაბეჭდავს ყველა სიტყვას და მათ სიხშირეს.
+
+  printWordFrequencies() {
+    let current = this.head;
+
+    while (current) {
+      console.log(`${current.word}: ${current.frequency}`);
+      current = current.next;
+    }
+  }
+}
+
+const text = "ცისფერი ცა ცისფერი ზღვა ლურჯი ცა";
+const words = text.toLowerCase().match(/\p{L}+/gu);
+
+if (words) {
+  const list = new LinkedList();
+  words.forEach((word) => list.addWord(word));
+
+  console.log("სიტყვის სიხშირე:");
+  list.printWordFrequencies();
+}
