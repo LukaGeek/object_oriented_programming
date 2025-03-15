@@ -169,31 +169,151 @@ first.next.next.next = new Node("e"); */
 // თუ ლისტი ცარიელია, მაშინ ეს მნიშვნელობა იქნება head და tail
 // თუ ლისტში უკვე არის ელემენტები, მაშინ tail-ის next-ს მიენიჭება ახალილ კვანძი(node), შემდეგ ამ კვანძზე მიუთითებს tail
 
-/* class SingleLinkedList {
-  constructor(head = null, tail = null) {
-    this.head = head; // თუ ლისტი ცარიელია, მაშინ ეს მნიშვნელობა იქნება head
+class Node {
+  constructor(val, next = null) {
+    this.val = val;
+    this.next = next;
+  }
+}
+
+class SingleLinkedList {
+  constructor(head = null, tail = null, length = 0) {
+    this.head = head;
     this.tail = tail;
-    this.length = 0;
+    this.length = length;
   }
 
   push(val) {
+    // ვამატებთ ელემენტს წინ
     let newNode = new Node(val);
 
     if (!this.head) {
       this.head = newNode;
       this.tail = newNode;
-    } else if (this.tail) {
+    } else {
       this.tail.next = newNode;
       this.tail = newNode;
     }
 
     this.length++;
+
+    return this;
+  }
+
+  pop() {
+    // ვშლით ბოლო ელემენტს
+    if (!this.head) return "No elements to pop!";
+    if (this.length === 0) {
+      this.head = null;
+      this.tail = null;
+    }
+
+    let current = this.head;
+    let newTail = current;
+
+    while (current.next) {
+      newTail = current;
+      current = current.next;
+    }
+
+    this.tail = newTail;
+    this.tail.next = null;
+    this.length--;
+
+    return current;
+  }
+
+  shift() {
+    // ვშლით პირველ ელემენტს
+    if (!this.head) return "no elements to shift!";
+    if (this.length === 0) {
+      this.tail = null;
+    }
+
+    let currentHead = this.head;
+    this.head = currentHead.next;
+
+    return currentHead.val;
+  }
+
+  unshift(val) {
+    // ვამატებთ ელემენტს წინ
+    let newNode = new Node(val);
+
+    if (!this.head) {
+      this.head = newNode;
+      this.tail = this.head;
+    } else {
+      newNode.next = this.head;
+      this.head = newNode;
+    }
+
+    this.length++;
+
+    return this;
+  }
+
+  get(index) {
+    // ვნომრავთ ჩვენი ხელით
+    if (index < 0 || index >= this.length) return null;
+    let counter = 0;
+    let current = this.head;
+    while (counter != index) {
+      current = current.next;
+
+      counter++;
+    }
+
+    return current;
+  }
+
+  set(val, index) {
+    let foundNode = this.get(index);
+
+    if (foundNode) {
+      foundNode.val = val;
+      return true;
+    }
+    return false;
+  }
+
+  insert(val, index) {
+    if (index < 0 || index > this.length) return null;
+    if (index === this.length) return !!this.push(val);
+    if (index === 0) this.unshift(val);
+
+    let newNode = new Node(val);
+    let prevNode = this.get(index - 1);
+    let temp = prevNode.next;
+    prevNode.next = newNode;
+    newNode.next = temp;
+
+    this.length++;
+
+    return this;
+  }
+
+  remove(index) {
+    if (index < 0 || index >= this.length) return null;
+    if (index === 0) return this.shift();
+    if (index === this.length - 1) return this.pop();
+
+    let prevNode = this.get(index - 1);
+    let removedNode = prevNode.next;
+    prevNode.next = removedNode.next;
+
+    this.length--;
+
+    return this.removedNode;
   }
 }
 
 let s_list = new SingleLinkedList();
-s_list.push("e");
-console.log(s_list); */
+s_list.push("b");
+s_list.push("a");
+s_list.push("i");
+s_list.insert("Hello!", 1);
+console.log(s_list);
 
 /* ისტორიული დოკუმენტების ბრაუზერი. */
 
@@ -287,7 +407,7 @@ console.log("წინა ვერსია:", history.pop());
 
 // 1. ვქმნით კვანძს, რომელიც შედგება: word, frequency, next
 
-class Node {
+/* class Node {
   constructor(word) {
     this.word = word;
     this.frequency = 1;
@@ -336,9 +456,9 @@ class LinkedList {
       current = current.next;
     }
   }
-}
+} */
 
-const text = "ცისფერი ცა ცისფერი ზღვა ლურჯი ცა";
+/* const text = "ცისფერი ცა ცისფერი ზღვა ლურჯი ცა";
 const words = text.toLowerCase().match(/\p{L}+/gu);
 
 if (words) {
@@ -347,4 +467,4 @@ if (words) {
 
   console.log("სიტყვის სიხშირე:");
   list.printWordFrequencies();
-}
+} */
