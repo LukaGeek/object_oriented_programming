@@ -169,7 +169,7 @@ first.next.next.next = new Node("e"); */
 // თუ ლისტი ცარიელია, მაშინ ეს მნიშვნელობა იქნება head და tail
 // თუ ლისტში უკვე არის ელემენტები, მაშინ tail-ის next-ს მიენიჭება ახალილ კვანძი(node), შემდეგ ამ კვანძზე მიუთითებს tail
 
-class Node {
+/* class Node {
   constructor(val, next = null) {
     this.val = val;
     this.next = next;
@@ -313,7 +313,7 @@ s_list.push("b");
 s_list.push("a");
 s_list.push("i");
 s_list.insert("Hello!", 1);
-console.log(s_list);
+console.log(s_list); */
 
 /* ისტორიული დოკუმენტების ბრაუზერი. */
 
@@ -468,3 +468,134 @@ if (words) {
   console.log("სიტყვის სიხშირე:");
   list.printWordFrequencies();
 } */
+
+/* ორად ბმული სია | Double linked list */
+// ორად ბმულ სიაში არ შეგვიძლია მივმართოთ ინდექსით, არ არის hashed(ჰეშირებული)
+
+// მუსიკალური პლეილისტი ორად ბმული სიის გამოყენებით.
+
+// 1. ვქმნით Node'ს
+
+class Node {
+  constructor(song, prev = null, next = null) {
+    this.song = song;
+    this.prev = prev;
+    this.next = next;
+  }
+}
+
+// 2. ვქმნით Playlist-ის კლასს
+class Playlist {
+  constructor(head = null, tail = null, current = null) {
+    this.head = head;
+    this.tail = tail;
+    this.current = current;
+  }
+
+  // 3. მუსიკის დამატება
+
+  addSong(song) {
+    const newNode = new Node(song);
+
+    if (!this.head) {
+      this.head = newNode;
+      this.tail = newNode;
+      this.current = newNode;
+    } else {
+      this.tail.next = newNode;
+      newNode.prev = this.tail;
+      this.tail = newNode;
+    }
+  }
+
+  // 4. მუსიკის ამოშლა
+
+  removeSong(song) {
+    let temp = this.head;
+
+    while (temp) {
+      if (temp.song === song) {
+        if (temp.prev) {
+          temp.prev.next = temp.next;
+        }
+        if (temp.next) {
+          temp.next.prev = temp.prev;
+        }
+        if (temp === this.head) {
+          this.head = temp.next;
+        }
+        if (temp === this.tail) {
+          this.tail = temp.prev;
+        }
+        if (temp === this.current) {
+          this.current = temp.next || temp.prev;
+        }
+
+        return;
+      }
+
+      temp = temp.next;
+    }
+  }
+
+  // 5. შემდეგი მუსიკის არჩევა
+
+  nextSong() {
+    if (this.current && this.current.next) {
+      this.current = this.current.next;
+    }
+  }
+
+  // 6. წინა მუსიკის არჩევა
+
+  previousSong() {
+    if (this.current && this.current.prev) {
+      this.current = this.current.prev;
+    }
+  }
+
+  // 7. მთლიანი პლეილისტის დაბეჭდვა
+
+  printPlaylist() {
+    let temp = this.head;
+    const songs = [];
+
+    while (temp) {
+      songs.push(temp.data);
+      temp = temp.next;
+    }
+    console.log(songs);
+  }
+
+  // 8. პლეილისტის შეტრიალება
+
+  reversePlaylist() {
+    let temp = null;
+    let current = this.head;
+
+    while (current) {
+      temp = current.prev;
+      current.prev = current.next;
+      current.next = temp;
+      current = current.prev;
+    }
+    if (temp) {
+      this.head = temp.prev;
+    }
+  }
+}
+
+const playlist = new Playlist();
+playlist.addSong("Song 1");
+playlist.addSong("Song 2");
+playlist.addSong("Song 3");
+/* playlist.printPlaylist(); // "Song 1 -> Song 2 -> Song 3" */
+playlist.nextSong(); // გადადის "Song 2"-ზე
+/* playlist.nextSong(); // გადადის "Song 3"-ზე
+playlist.previousSong(); // დაბრუნდება "Song 2"-ზე
+playlist.removeSong("Song 2");
+playlist.printPlaylist(); // "Song 1 -> Song 3"
+playlist.reversePlaylist();
+playlist.printPlaylist(); // "Song 3 -> Song 1" */
+
+console.log(playlist);
