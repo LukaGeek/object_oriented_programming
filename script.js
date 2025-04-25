@@ -729,5 +729,4 @@ let BinaryTree = new BinarySearchTree();
 BinaryTree.insert(10);
 BinaryTree.insert(3);
 BinaryTree.insert(14);
-let smth = BinaryTree.insert(3);
-console.log(BinaryTree, smth.slice(0, 9));
+console.log(BinaryTree);
