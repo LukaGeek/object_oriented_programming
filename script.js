@@ -476,7 +476,7 @@ if (words) {
 
 // 1. ვქმნით Node'ს
 
-class Node {
+/* class Node {
   constructor(song, prev = null, next = null) {
     this.song = song;
     this.prev = prev;
@@ -589,13 +589,145 @@ const playlist = new Playlist();
 playlist.addSong("Song 1");
 playlist.addSong("Song 2");
 playlist.addSong("Song 3");
-/* playlist.printPlaylist(); // "Song 1 -> Song 2 -> Song 3" */
+//playlist.printPlaylist(); // "Song 1 -> Song 2 -> Song 3" 
 playlist.nextSong(); // გადადის "Song 2"-ზე
-/* playlist.nextSong(); // გადადის "Song 3"-ზე
-playlist.previousSong(); // დაბრუნდება "Song 2"-ზე
-playlist.removeSong("Song 2");
-playlist.printPlaylist(); // "Song 1 -> Song 3"
-playlist.reversePlaylist();
-playlist.printPlaylist(); // "Song 3 -> Song 1" */
+//playlist.nextSong(); // გადადის "Song 3"-ზე
+//playlist.previousSong(); // დაბრუნდება "Song 2"-ზე
+//playlist.removeSong("Song 2");
+//playlist.printPlaylist(); // "Song 1 -> Song 3"
+//playlist.reversePlaylist();
+//playlist.printPlaylist(); // "Song 3 -> Song 1" 
 
-console.log(playlist);
+console.log(playlist); */
+
+/* Stack - სტეკი */
+
+// stack - დასტა. ახალ ელემენტს ვერც შიგნით და ვერც თავში. თუკი თავში ჩავამატეთ მაშინ გამოვა უკუ თვლა, ანუ პირველი ელემენტი ყველაზე ბოლო იქნება. LIFO - Last Input, First Output.
+// stack - მონაცემთა სტრუქტურა, რომელსაც აქვს მხოლოდ ბოლო აქტიური და პირველად დამატებული ბოლოს გამოიძახება, ან ბოლოს დამატებული - პირველად.
+
+/* class Node {
+  constructor(value, next = null) {
+    this.value = value;
+    this.next = next;
+  }
+}
+
+class Stack {
+  // stack-ის constructor
+  constructor(first = null, last = null, size = 0) {
+    this.first = first;
+    this.last = last;
+    this.size = size;
+  }
+
+  push = (value) => {
+    let newNode = new Node(value);
+
+    if (!this.first || this.size == 0) {
+      this.first = newNode;
+      this.last = newNode;
+    } else {
+      let temp = this.first;
+
+      this.first = newNode;
+      newNode.next = temp;
+    }
+    return ++this.size;
+  };
+
+  pop = () => {
+    if (!this.first || this.size == 0) return "First value not found.";
+    if (this.first === this.last) {
+      this.last = null;
+    }
+
+    let temp = this.first;
+
+    this.first = temp.next;
+
+    this.size--;
+
+    return temp;
+  };
+}
+
+let stack = new Stack();
+
+stack.push("f");
+stack.push("r");
+stack.push("e");
+stack.push("e");
+stack.push("d");
+stack.push("o");
+stack.push("m");
+
+stack.pop();
+console.log(stack); */
+
+/* ------------------------------------------ */
+
+/* Queue - რიგი */
+// queue - რიგი. მისი პრინციპი არის საპირისპირო stack-ის. ეს არის FIFO - First Input, First Output.
+// dequeue - double end queue
+
+/* ------------------------------------------ */
+
+/* BinarySearchTree - ორობითი ძიების ხე */
+
+// გვაქვს - root, child, parent, siblings, leaf, edge
+// თუ ნაკლებია წავა მარჯვნივ რიცხვები, თუ მეტი, მაშინ მარცხნივ
+// თითოეულ მშობელ კვანძს გააჩნია მაქსიმუმ 2 შვილი
+// მშობელი კვანძის მარცხნივ მყოფი ყოველი კვანძი ნაკლებია მშობელზე და მარჯვნივ კი - მეტია
+
+class Node {
+  constructor(value = null, left = null, right = null) {
+    this.value = value;
+    this.left = left;
+    this.right = right;
+  }
+}
+
+class BinarySearchTree {
+  constructor(root = null) {
+    this.root = root;
+  }
+
+  insert = (value) => {
+    let newNode = new Node(value);
+
+    if (this.root === null) {
+      this.root = newNode;
+
+      return this;
+    }
+
+    let current = this.root;
+
+    while (true) {
+      if (value === current.value) return "Inserted node is already on a tree";
+      if (value < current.value) {
+        if (!current.left) {
+          current.left = newNode;
+
+          return this;
+        }
+        current = current.left;
+      } else {
+        if (!current.right) {
+          current.right = newNode;
+
+          return this;
+        }
+        current = current.right;
+      }
+    }
+  };
+}
+
+let BinaryTree = new BinarySearchTree();
+
+BinaryTree.insert(10);
+BinaryTree.insert(3);
+BinaryTree.insert(14);
+let smth = BinaryTree.insert(3);
+console.log(BinaryTree, smth.slice(0, 9));
